@@ -1,5 +1,5 @@
 import React, { use } from 'react';
-import { Link, Navigate, NavLink, useNavigate } from 'react-router';
+import { Link, Navigate, NavLink, } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 import { toast } from 'react-toastify';
 import userimg from '../assets/user.png'
@@ -7,7 +7,7 @@ import userimg from '../assets/user.png'
 
 const Navbar = () => {
   const {user, logoutUser} = use(AuthContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 
   const handleLogout =()=>{
@@ -34,6 +34,13 @@ const Navbar = () => {
       <NavLink className="ml-5 " to="/reports">
         <li>Reports</li>
       </NavLink>
+            <NavLink className="ml-5 " to="/profile">
+        <li>My Profile</li>
+      </NavLink>
+          
+
+
+      {/* conditional if user unavailable */}
     {
       !user && (
         <>
@@ -43,6 +50,7 @@ const Navbar = () => {
           <NavLink className="ml-5 " to="/register">
             <li>Register </li>
           </NavLink>
+        
         </>
       )
     }
@@ -90,25 +98,44 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex ">
           <ul className="menu menu-horizontal px-2">{links}</ul>
         </div>
+
+        {/* dropdown */}
         <div className="navbar-end">
-        {/* user image show  */}
-          <img onClick={()=>navigate('/profile')}
-            className="mr-5 w-11 rounded-full"
-            src={`${user ? user.photoURL : userimg}`}
-          />
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="btn bg-secondary text-base-100"
-            >
-              Logout
-            </button>
-          ) : (
-            <Link to="/login" className="btn bg-secondary text-base-100">
-              Login
-            </Link>
-          )}
-        </div>
+  {user ? (
+    <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button">
+        <img
+          className="mr-3 w-11 h-11 rounded-full cursor-pointer"
+          src={user.photoURL ? user.photoURL : userimg}
+        />
+      </div>
+
+      <ul
+        tabIndex={0}
+        className="dropdown-content z-10 menu p-4 shadow bg-base-100 rounded-box w-fit"
+      >
+        <li className="flex flex-col items-start  border-b">
+          <span className="font-semibold w-full">{user.displayName || "User"}</span>
+
+          <span className="text-sm opacity-70">{user.email}</span>
+        </li>
+
+        <li className="mt-2">
+          <button
+            onClick={handleLogout}
+            className="btn btn-outline btn-sm bg-linear-to-r from-[#db28eb] to-[#e84646]  text-white"
+          >
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  ) : (
+    <Link to="/login" className="btn bg-secondary text-base-100">
+      Login
+    </Link>
+  )}
+</div>
       </div>
     </section>
     );
