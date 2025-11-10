@@ -54,8 +54,8 @@ const Navbar = () => {
   );
 
     return (
-          <div className="navbar bg-base-100 shadow-sm mb-9">
-      <div className="w-11/12 mx-auto flex">
+         <section className="w-full bg-base-100 shadow-sm mb-9 border-2">
+  <div className="w-full flex justify-between items-center px-4">
         <div className="navbar-start ">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -110,7 +110,7 @@ const Navbar = () => {
           )}
         </div>
       </div>
-    </div>
+    </section>
     );
 };
 
