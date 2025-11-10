@@ -7,7 +7,7 @@ import FinancialPlanning from './FinancialPlanning';
 const Home = () => {
     return (
         <>
-            <section>
+            <section >
 
             <Banner></Banner>
             </section>

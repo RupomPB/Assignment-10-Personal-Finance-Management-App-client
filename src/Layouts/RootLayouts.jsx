@@ -9,7 +9,7 @@ const RootLayouts = () => {
       <section className="sticky top-0 z-50 w-full">
         <Navbar />
       </section>
-      <main className="grow">
+      <main className=" bg-base-200">
         <Outlet />
       </main>
       <section>
