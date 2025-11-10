@@ -1,26 +1,52 @@
-import React, { use } from 'react';
-import { Link } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Register = () => {
 
-    const {signInWithGoogle,createUser} = use(AuthContext)
+    const [passwordError, setPasswordError] = useState('')
+    const {signInWithGoogle,createUser,userInfo, setUser} = use(AuthContext);
+
+    const navigate = useNavigate();
 
     const handleRegister=(e)=>{
         e.preventDefault();
 
         const email =e.target.email.value;
-        const password =e.target.password.value;
-        const photoURL =e.target.photo.value;
+        
+        const photo =e.target.photo.value;
         const name =e.target.name.value;
-        console.log(email, password, photoURL, name)
+        const password =e.target.password.value;
+        
+        if(password.length < 6){
+          setPasswordError("Password should be minimum  6 character");
+          return;
+        }
+        if(password.toLowerCase() === password){
+          setPasswordError('password must include at least one uppercase letter');
+          return;
+        }
+        if(password.toUpperCase()=== password){
+          setPasswordError('password must include at least one lower letter ');
+          return;
+        }
+        console.log(email, password, photo, name)
 
         createUser(email, password)
         .then(result =>{
-            console.log(result.user)
+          const user = result.user;
+            console.log(user);
+            // update user info
+            userInfo({displayName: name, photoURL: photo})
+            .then(()=>{
+              setUser({...user, displayName: name, photoURL: photo});
+              navigate('/')
+            })
+
         })
         .catch(error=>{
-            console.log(error.message)
+            toast.error(error.message)
         })
 
     }
@@ -75,15 +101,15 @@ const Register = () => {
               placeholder="Password"
               name="password"
             />
-            {/* {passwordError && (
+            {passwordError && (
               <p className="text-red-500 text-xs">{passwordError}</p>
-            )} */}
+            )}
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>
             <button
               type="submit"
-              className="btn btn-outline bg-linear-to-r from-[#28EBE8] to-[#468CE8]  mt-4"
+              className="btn btn-outline bg-linear-to-r from-[#db28eb] to-[#e84646]  mt-4"
             >
               Register
             </button>
@@ -125,7 +151,7 @@ const Register = () => {
             <p className=" font-semibold text-center py-4">
               Already have a account?..
               <Link className=" text-secondary " to="/login">
-                Register
+                Login
               </Link>
             </p>
           </fieldset>

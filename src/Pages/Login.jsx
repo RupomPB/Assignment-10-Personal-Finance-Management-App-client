@@ -1,11 +1,11 @@
-import React, { use, useState } from "react";
+import React, { use, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const {  signInUser,signInWithGoogle } = use(AuthContext);
-//   const emailRef =useRef();
+  const emailRef =useRef();
 
   const location = useLocation();
   const navigate = useNavigate()
@@ -19,6 +19,7 @@ const Login = () => {
 
     console.log(email, password);
 
+    // for normal sign in
     signInUser(email, password)
       .then((result) => {
         toast.success('Sign in successfully',result.user);
@@ -41,6 +42,7 @@ const Login = () => {
       });
   };
 
+  // google sign in
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
@@ -68,7 +70,7 @@ const Login = () => {
               className="input"
               placeholder="Email"
               name="email"
-            //   ref={emailRef}
+              ref={emailRef}
               required
             />
             {/* password field */}
@@ -80,17 +82,17 @@ const Login = () => {
               name="password"
               required
             />
-            {/* {passwordError && (
-              <p className="text-red-500 text-xs">{passwordError}</p>
-            )} */}
+            {error && 
+              <p className="text-red-500 text-xs">{error}</p>
+            }
             <div>
               <a className="link link-hover">Forgot password?</a>
             </div>
             <button
               type="submit"
-              className="btn btn-outline bg-linear-to-r from-[#28EBE8] to-[#468CE8]  mt-4"
+              className="btn btn-outline bg-linear-to-r from-[#db28eb] to-[#e84646]  mt-4"
             >
-              Register
+              Login
             </button>
             {/* Google */}
             <button
@@ -127,10 +129,13 @@ const Login = () => {
               </svg>
               Login with Google
             </button>
+            {
+              error && <p className="text-red-500 text-xs">{error}</p>
+            }
             <p className=" font-semibold text-center py-4">
               Are you a new user?..
               <Link className=" text-secondary " to="/register">
-              Login
+              Register
               </Link>
             </p>
           </fieldset>

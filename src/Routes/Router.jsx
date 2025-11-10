@@ -6,6 +6,9 @@ import MyTransactions from './../Pages/MyTransactions';
 import Reports from "../Pages/Reports";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import Profile from "../Pages/Profile";
+import UpdateProfile from "../Pages/UpdateProfile";
+import PrivateRouter from "../Context/PrivateRouter";
 
 
 
@@ -20,15 +23,21 @@ const router = createBrowserRouter([
         },
         {
             path: '/addTransaction',
-            element: <AddTransaction></AddTransaction>
+            element: <PrivateRouter>
+                <AddTransaction></AddTransaction>
+            </PrivateRouter>
         },
         {
             path: '/myTransactions',
-            element: <MyTransactions></MyTransactions>
+            element: <PrivateRouter>
+                <MyTransactions></MyTransactions>
+            </PrivateRouter>
         },
         {
             path: '/reports',
-            element: <Reports></Reports>
+            element: <PrivateRouter>
+                <Reports></Reports>
+            </PrivateRouter>
         },
         {
             path: '/login',
@@ -37,6 +46,18 @@ const router = createBrowserRouter([
         {
             path:'/register',
             element: <Register></Register>
+        },
+        {
+            path: '/profile',
+            element: <PrivateRouter>
+                <Profile></Profile>
+            </PrivateRouter>
+        },
+        {
+            path: '/profile/update',
+            element: <PrivateRouter>
+                <UpdateProfile></UpdateProfile>
+            </PrivateRouter>
         }
     ]
   },

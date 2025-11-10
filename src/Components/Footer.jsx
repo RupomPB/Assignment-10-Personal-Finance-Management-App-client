@@ -5,7 +5,7 @@ const Footer = () => {
        <footer className="bg-base-200 ">
       <div className="max-w-7xl mx-auto footer sm:footer-horizontal  text-base-content p-10 ">
         <aside className=' flex flex-col items-center'>
-        <p className=' font-bold text-xl'>Fin <span className='text-primary'>Ease</span></p>
+        <p className=' font-bold text-xl'>Fin <span className='bg-linear-to-r from-[#db28eb] to-[#e84646] text-transparent bg-clip-text '>Ease</span></p>
           <p>
             ACME Industries Ltd.
             <br />

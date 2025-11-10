@@ -1,10 +1,13 @@
 import React, { use } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, Navigate, NavLink, useNavigate } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 import { toast } from 'react-toastify';
+import userimg from '../assets/user.png'
+
 
 const Navbar = () => {
-  const {user, logoutUser} = use(AuthContext)
+  const {user, logoutUser} = use(AuthContext);
+  const navigate = useNavigate();
 
 
   const handleLogout =()=>{
@@ -80,7 +83,7 @@ const Navbar = () => {
             </ul>
           </div>
           <div>
-            <p className=' font-bold text-xl'>Fin <span className='text-primary'>Ease</span></p>
+            <p className=' font-bold text-xl'>Fin <span className='bg-linear-to-r from-[#db28eb] to-[#e84646] text-transparent bg-clip-text'>Ease</span></p>
           </div>
           {/* {user && user.email} */}
         </div>
@@ -89,10 +92,10 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
         {/* user image show  */}
-          {/* <img onClick={()=>navigate('/profile')}
+          <img onClick={()=>navigate('/profile')}
             className="mr-5 w-11 rounded-full"
             src={`${user ? user.photoURL : userimg}`}
-          /> */}
+          />
           {user ? (
             <button
               onClick={handleLogout}
