@@ -23,13 +23,13 @@ const router = createBrowserRouter([
            Component: Home
         },
         {
-            path: '/addTransaction',
+            path: '/add-transaction',
             element: <PrivateRouter>
                 <AddTransaction></AddTransaction>
             </PrivateRouter>
         },
         {
-            path: '/myTransactions',
+            path: '/my-transactions',
             element: <PrivateRouter>
                 <MyTransactions></MyTransactions>
             </PrivateRouter>

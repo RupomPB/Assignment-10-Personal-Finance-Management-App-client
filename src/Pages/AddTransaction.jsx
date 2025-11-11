@@ -53,7 +53,7 @@ const AddTransaction = () => {
     .then((data)=>{
         if(data.data.insertedId){
             e.target.reset();
-            navigate('/myTransactions');
+            navigate('/my-transactions');
               toast.success("Transaction added successfully!");
 
         }
