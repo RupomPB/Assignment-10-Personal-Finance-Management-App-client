@@ -7,6 +7,7 @@ import { GrDocumentUpdate } from "react-icons/gr";
 import { CiViewList } from "react-icons/ci";
 import Swal from "sweetalert2";
 import useAxios from "../hooks/useAxios";
+import { Link } from "react-router";
 
 const MyTransactions = () => {
   const { user } = use(AuthContext);
@@ -140,13 +141,13 @@ const MyTransactions = () => {
                 View Details
               </button>
 
-              <button
-                // onClick={() => navigate(`/transaction/update/${tx._id}`)}
+              <Link
+               to={`/transaction/update/${tx._id}`}
                 className=" px-3 py-1 rounded-lg flex items-center text-yellow-600 bg-yellow-100"
               >
                 <GrDocumentUpdate />
                 Update
-              </button>
+              </Link>
 
               <button
                 onClick={() => handleDelete(tx._id)}

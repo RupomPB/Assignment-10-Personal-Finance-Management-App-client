@@ -10,6 +10,7 @@ import Profile from "../Pages/Profile";
 import UpdateProfile from "../Pages/UpdateProfile";
 import PrivateRouter from "../Context/PrivateRouter";
 import ErrorPage from "../Pages/ErrorPage";
+import UpdateTransaction from "../Pages/UpdateTransaction";
 
 
 
@@ -32,6 +33,13 @@ const router = createBrowserRouter([
             path: '/my-transactions',
             element: <PrivateRouter>
                 <MyTransactions></MyTransactions>
+            </PrivateRouter>
+        },
+        {
+            path:'/transaction/update/:id',
+            loader: ({params})=>fetch(`http://localhost:3000/transactions/${params.id}`),
+            element: <PrivateRouter>
+                <UpdateTransaction></UpdateTransaction>
             </PrivateRouter>
         },
         {
