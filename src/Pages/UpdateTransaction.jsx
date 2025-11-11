@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useLoaderData, useNavigate } from "react-router";
+import useAxios from "../hooks/useAxios";
+import Swal from "sweetalert2";
 
 const UpdateTransaction = () => {
   const transaction = useLoaderData();
   const [type, setType] = useState(transaction.type);
   const [category, setCategory] = useState(transaction.category);
   const navigate = useNavigate();
+  const axiosInstance= useAxios();
 
   const incomeCategory = [
     "Salary",
@@ -29,7 +32,40 @@ const UpdateTransaction = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
+
+    const type = e.target.type.value;
+    const category = e.target.category.value;
+    const amount= e.target.amount.value;
+    const description = e.target.description.value;
+    const date  = e.target.date.value;
+    console.log(type, category, amount, description, date)
+
+    const updateInfo ={
+        type,
+        category,
+        amount,
+        description,
+        date,
+    }
+
+    axiosInstance.patch(`/transactions/${transaction._id}`, updateInfo)
+    .then(data=>{
+        console.log('after update',data)
+        if(data.data.modifiedCount){
+           Swal.fire({
+						position: "center",
+						icon: "success",
+						title: "Your transaction has been updated",
+						showConfirmButton: false,
+						timer: 1500,
+					});
+					navigate(`/transaction/${transaction._id}`); 
+        }
+    })
+
   };
+
+
 
   return (
     <section className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
@@ -71,7 +107,7 @@ const UpdateTransaction = () => {
                 </option>
               ))}
 
-            {type === "expense" &&
+            {type === "expanse" &&
               expenseCategory.map((cat) => (
                 <option key={cat} value={cat.toLocaleLowerCase()}>
                   {cat}

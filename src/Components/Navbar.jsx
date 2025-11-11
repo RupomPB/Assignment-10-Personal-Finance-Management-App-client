@@ -62,8 +62,8 @@ const Navbar = () => {
   );
 
     return (
-         <section className="w-full bg-base-100 shadow-sm mb-9 border-2">
-  <div className="w-full flex justify-between items-center px-4">
+         <section className="w-full bg-base-100 shadow-sm py-3 border-2 ">
+  <div className="container mx-auto flex justify-between items-center px-4">
         <div className="navbar-start ">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
