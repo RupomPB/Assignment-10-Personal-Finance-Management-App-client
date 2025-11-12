@@ -6,7 +6,7 @@ import Navbar from "../Components/Navbar";
 const RootLayouts = () => {
   return (
     <>
-      <section className="sticky top-0 z-50 w-full ">
+      <section className="sticky top-0 z-50 w-full bg-transparent">
         <Navbar />
       </section>
       <main className=" ">
