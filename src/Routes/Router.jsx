@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         },
         {
             path:'/transaction/:id',
-            
+            loader:({params})=>fetch(`http://localhost:3000/transactions/${params.id}`),
             element: <PrivateRouter>
                 <TransactionsDetails></TransactionsDetails>
             </PrivateRouter>
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             </PrivateRouter>
         },
         {
-            path: '/reports',
+            path: '/my-reports',
             element: <PrivateRouter>
                 <Reports></Reports>
             </PrivateRouter>

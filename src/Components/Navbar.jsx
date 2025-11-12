@@ -31,7 +31,7 @@ const Navbar = () => {
       <NavLink className="ml-5 " to="/my-transactions">
         <li>My Transactions</li>
       </NavLink>
-      <NavLink className="ml-5 " to="/reports">
+      <NavLink className="ml-5 " to="/my-reports">
         <li>Reports</li>
       </NavLink>
             <NavLink className="ml-5 " to="/profile">

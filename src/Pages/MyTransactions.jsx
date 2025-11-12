@@ -133,13 +133,13 @@ const MyTransactions = () => {
             </p>
 
             <div className="mt-4 flex justify-between">
-              <button
-                // onClick={() => navigate(`/transaction/${tx._id}`)}
+              <Link
+                to={`/transaction/${tx._id}`} 
                 className="px-3 py-1 rounded-lg flex items-center "
               >
                 <CiViewList />
                 View Details
-              </button>
+              </Link>
 
               <Link
                to={`/transaction/update/${tx._id}`}
