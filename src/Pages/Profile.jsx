@@ -22,8 +22,8 @@ const Profile = () => {
             {" "}
             User Email: {user?.email}
           </p>
-          <Link to="/profile/update">
-            <button className="btn bg-linear-to-r from-[#db28eb] to-[#e84646]  mt-5">Update Information</button>
+          <Link to="/profile/update" className='text-center'>
+            <button className=" btn bg-linear-to-r from-[#db28eb] to-[#e84646]  mt-5 ">Update Information</button>
           </Link>
         </div>
       </div>

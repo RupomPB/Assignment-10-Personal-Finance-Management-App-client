@@ -68,12 +68,12 @@ const MonthlyChart = () => {
   }, [user]);
 
   return (
-    <div className="w-full h-[400px] rounded-2xl">
+    <div className="w-full min-h-[400px] rounded-2xl">
       <h2 className="text-2xl font-semibold text-center py-5">
         Here is your <span>Monthly Income vs Expense</span>
       </h2>
 
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" aspect={2}>
         <BarChart
           data={chartData}
           

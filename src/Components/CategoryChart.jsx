@@ -59,11 +59,11 @@ const CategoryChart = () => {
   }, [user]);
 
   return (
-    <div className="w-full h-[400px] bg-white rounded-2xl  p-4 py-10 my-10">
+    <div className="w-full min-h-[400px] bg-white rounded-2xl  p-4 py-10 my-10">
       <h2 className="text-2xl font-semibold text-center mb-4">
         Category-wise Transactions
       </h2>
-      <ResponsiveContainer className='' width="100%" height="100%">
+      <ResponsiveContainer className='' width="100%" aspect={2}>
         <PieChart>
           <Pie
             data={chartData}

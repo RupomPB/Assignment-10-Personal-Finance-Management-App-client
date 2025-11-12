@@ -1,26 +1,39 @@
-import React, { use } from 'react';
-import { Link, Navigate, NavLink, } from 'react-router';
-import { AuthContext } from '../Context/AuthContext';
-import { toast } from 'react-toastify';
-import userimg from '../assets/user.png'
+import React, { use, useEffect, useState } from "react";
+import { Link, Navigate, NavLink } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
+import { toast } from "react-toastify";
+import userimg from "../assets/user.png";
 
 
 const Navbar = () => {
-  const {user, logoutUser} = use(AuthContext);
+  const { user, logoutUser } = use(AuthContext);
   // const navigate = useNavigate();
+  const [theme, setTheme]= useState(localStorage.getItem('theme') || 'light');
 
 
-  const handleLogout =()=>{
+  useEffect(()=>{
+    const html = document.querySelector('html')
+    html.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  },[theme])
+
+  const handleTheme = (checked) => {
+    console.log(checked);
+    setTheme(checked? 'dark': 'light')
+
+  };
+
+  const handleLogout = () => {
     logoutUser()
-    .then(()=>{
-        toast.success('sign-out successfully')
-    })
-    .catch((error)=>{
-      toast.error(error.message)
-    })
-  }
+      .then(() => {
+        toast.success("sign-out successfully");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
-    const links = (
+  const links = (
     <>
       <NavLink className="ml-5 " to="/">
         <li>Home </li>
@@ -34,15 +47,12 @@ const Navbar = () => {
       <NavLink className="ml-5 " to="/my-reports">
         <li>Reports</li>
       </NavLink>
-            <NavLink className="ml-5 " to="/profile">
+      <NavLink className="ml-5 " to="/profile">
         <li>My Profile</li>
       </NavLink>
-          
-
 
       {/* conditional if user unavailable */}
-    {
-      !user && (
+      {!user && (
         <>
           <NavLink className="ml-5 " to="/login">
             <li>Login </li>
@@ -50,20 +60,14 @@ const Navbar = () => {
           <NavLink className="ml-5 " to="/register">
             <li>Register </li>
           </NavLink>
-        
         </>
-      )
-    }
-     
-        
-
-   
+      )}
     </>
   );
 
-    return (
-         <section className="w-full bg-base-100 shadow-sm py-3 border-2 ">
-  <div className="container mx-auto flex justify-between items-center px-4">
+  return (
+    <section className="w-full bg-base-100 shadow-sm py-3 border-2 ">
+      <div className="container mx-auto flex justify-between items-center px-4">
         <div className="navbar-start ">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -91,7 +95,12 @@ const Navbar = () => {
             </ul>
           </div>
           <div>
-            <p className=' font-bold text-xl'>Fin <span className='bg-linear-to-r from-[#db28eb] to-[#e84646] text-transparent bg-clip-text'>Ease</span></p>
+            <p className=" font-bold text-xl">
+              Fin{" "}
+              <span className="bg-linear-to-r from-[#db28eb] to-[#e84646] text-transparent bg-clip-text">
+                Ease
+              </span>
+            </p>
           </div>
           {/* {user && user.email} */}
         </div>
@@ -100,45 +109,56 @@ const Navbar = () => {
         </div>
 
         {/* dropdown */}
+
+      
+
         <div className="navbar-end">
-  {user ? (
-    <div className="dropdown dropdown-end">
-      <div tabIndex={0} role="button">
-        <img
-          className="mr-3 w-11 h-11 rounded-full cursor-pointer"
-          src={user.photoURL ? user.photoURL : userimg}
+          <input
+          onChange={(e) => handleTheme(e.target.checked)}
+          type="checkbox"
+          defaultChecked={localStorage.getItem("theme") === "dark"}
+          className="toggle mr-5"
         />
-      </div>
+          {user ? (
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button">
+                <img
+                  className="mr-3 w-11 h-11 rounded-full cursor-pointer"
+                  src={user.photoURL ? user.photoURL : userimg}
+                />
+              </div>
 
-      <ul
-        tabIndex={0}
-        className="dropdown-content z-10 menu p-4 shadow bg-base-100 rounded-box w-fit"
-      >
-        <li className="flex flex-col items-start  border-b">
-          <span className="font-semibold w-full">{user.displayName || "User"}</span>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-10 menu p-4 shadow bg-base-100 rounded-box w-fit"
+              >
+                <li className="flex flex-col items-start  border-b">
+                  <span className="font-semibold w-full">
+                    {user.displayName || "User"}
+                  </span>
 
-          <span className="text-sm opacity-70">{user.email}</span>
-        </li>
+                  <span className="text-sm opacity-70">{user.email}</span>
+                </li>
 
-        <li className="mt-2">
-          <button
-            onClick={handleLogout}
-            className="btn btn-outline btn-sm bg-linear-to-r from-[#db28eb] to-[#e84646]  text-white"
-          >
-            Logout
-          </button>
-        </li>
-      </ul>
-    </div>
-  ) : (
-    <Link to="/login" className="btn bg-secondary text-base-100">
-      Login
-    </Link>
-  )}
-</div>
+                <li className="mt-2">
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-outline btn-sm bg-linear-to-r from-[#db28eb] to-[#e84646]  text-white"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link to="/login" className="btn bg-secondary text-base-100">
+              Login
+            </Link>
+          )}
+        </div>
       </div>
     </section>
-    );
+  );
 };
 
 export default Navbar;
