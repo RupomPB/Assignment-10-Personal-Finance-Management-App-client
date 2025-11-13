@@ -35,29 +35,29 @@ const Navbar = () => {
 
   const links = (
     <>
-      <NavLink className="ml-5 " to="/">
+      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/">
         <li>Home </li>
       </NavLink>
-      <NavLink className="ml-5 " to="/add-transaction">
+      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/add-transaction">
         <li>Add Transaction</li>
       </NavLink>
-      <NavLink className="ml-5 " to="/my-transactions">
+      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/my-transactions">
         <li>My Transactions</li>
       </NavLink>
-      <NavLink className="ml-5 " to="/my-reports">
+      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/my-reports">
         <li>Reports</li>
       </NavLink>
-      <NavLink className="ml-5 " to="/profile">
+      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/profile">
         <li>My Profile</li>
       </NavLink>
 
       {/* conditional if user unavailable */}
       {!user && (
         <>
-          <NavLink className="ml-5 " to="/login">
+          <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/login">
             <li>Login </li>
           </NavLink>
-          <NavLink className="ml-5 " to="/register">
+          <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/register">
             <li>Register </li>
           </NavLink>
         </>
@@ -66,7 +66,7 @@ const Navbar = () => {
   );
 
   return (
-    <section className="w-full bg-base-100 shadow-sm py-3 border-2 ">
+    <section className="w-full bg-base-100 shadow-sm py-3  ">
       <div className="container mx-auto flex justify-between items-center px-4">
         <div className="navbar-start ">
           <div className="dropdown">

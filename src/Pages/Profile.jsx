@@ -10,7 +10,7 @@ const Profile = () => {
 
     return (
             <div className="min-h-screen flex flex-col justify-center items-center bg-base-300 ">
-        <div className="card bg-white shadow-lg p-8 rounded-xl w-full max-w-md h-[450px] my-10">
+        <div className="card bg-white dark:bg-[#1d232a] shadow-lg p-8 rounded-xl w-full max-w-md h-[450px] my-10">
           <img
             src={user?.photoURL || userimg}
             className="w-28 h-28 mx-auto rounded-full mb-4 border"
@@ -18,7 +18,7 @@ const Profile = () => {
           <h2 className="text-xl font-semibold text-center py-3">
             User Name: {user?.displayName || "No Name"}
           </h2>
-          <p className="text-center text-gray-600 mt-2">
+          <p className="text-center text-gray-500 mt-2 dark:text-gray-300">
             {" "}
             User Email: {user?.email}
           </p>

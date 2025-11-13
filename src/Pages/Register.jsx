@@ -2,6 +2,7 @@ import React, { use, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../Context/AuthContext';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const Register = () => {
 
@@ -37,6 +38,14 @@ const Register = () => {
         .then(result =>{
           const user = result.user;
             console.log(user);
+            navigate('/');
+            Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Your Registration successfully completed",
+  showConfirmButton: false,
+  timer: 1500
+});
 
 
              const newUser ={
@@ -55,7 +64,7 @@ const Register = () => {
             })
             .then(res =>res.json())
             .then(data =>{
-              console.log('data after user save', data)
+              console.log('data after user save', data);
             })
 
 

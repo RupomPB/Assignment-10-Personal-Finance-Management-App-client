@@ -83,7 +83,7 @@ const MonthlyChart = () => {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Legend />
+          <Legend/>
 
           <Bar dataKey="income" fill="#44f295" />
           <Bar dataKey="expense" fill="#eb3b49" />

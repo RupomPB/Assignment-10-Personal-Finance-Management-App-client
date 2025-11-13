@@ -59,7 +59,7 @@ const CategoryChart = () => {
   }, [user]);
 
   return (
-    <div className="w-full min-h-[400px] bg-white rounded-2xl  p-4 py-10 my-10">
+    <div className="w-full min-h-[400px] bg-white dark:bg-[#1d232a] rounded-2xl  p-4 py-10 my-10">
       <h2 className="text-2xl font-semibold text-center mb-4">
         Category-wise Transactions
       </h2>

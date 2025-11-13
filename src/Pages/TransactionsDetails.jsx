@@ -1,18 +1,48 @@
 import { Tag } from "lucide-react";
-import React, { use } from "react";
+import React, { use, useEffect, useState } from "react";
 import { BiCategory } from "react-icons/bi";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { useLoaderData, useNavigate } from "react-router";
 import { AuthContext } from './../Context/AuthContext';
 import { IoIosArrowRoundBack } from "react-icons/io";
+import useAxios from "../hooks/useAxios";
+import CategoryChart from './../Components/CategoryChart';
 
 const TransactionsDetails = () => {
   const transaction = useLoaderData();
   const {user} =use(AuthContext);
   const navigate = useNavigate();
+  const axiosInstance = useAxios();
+
+  const [categoryTotal, setCategoryTotal] = useState(0)
+
+
+
+  useEffect(()=>{
+    const fetchCategoryTotal = async()=>{
+      try{
+        const res = await axiosInstance.get(
+          `/transactions?email=${user?.email}`
+        );
+        const transactions = res.data;
+
+        const total = transactions
+        .filter((t)=>t.category === transaction.category).reduce((sum,t)=>sum + Number(t.amount),0)
+
+        setCategoryTotal(total);
+
+      }
+      catch(error){
+        console.log(error.message);
+      }
+    }
+    fetchCategoryTotal();
+  },[transaction.category,user?.email,axiosInstance])
+
+
 
   return (
-    <section className="max-w-3xl mx-auto p-6 bg-white dark:bg-[#1d232a] border border-gray-500 shadow-lg rounded-lg my-20 ">
+    <section className="max-w-3xl mx-auto p-6 bg-white dark:bg-[#1d232a] border border-gray-100 shadow-lg rounded-lg my-20 ">
       <h2 className="text-2xl font-bold mb-6 text-center">
         Your Transaction Details
       </h2>
@@ -98,7 +128,7 @@ const TransactionsDetails = () => {
           <span className="font-semibold">
             Total Amount in "{transaction.category}" category:{" "}
           </span>
-          <span className="font-bold text-blue-600">$</span>
+          <span className={`font-bold ${transaction.type == "income"? "text-blue-600": "text-red-600" }`}>${categoryTotal}</span>
         </div>
 
          {/*Created By Section */}

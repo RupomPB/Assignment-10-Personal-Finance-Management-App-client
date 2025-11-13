@@ -50,7 +50,7 @@ const MyTransactions = () => {
   // get transaction data
   useEffect(() => {
     fetch(
-      `https://finease-server-psi.vercel.app/transactions?email=${user.email}&sort=${sortBy}`
+      `http://localhost:3000/transactions?email=${user.email}&sort=${sortBy}`
     )
       .then((res) => res.json())
       .then((data) => {
