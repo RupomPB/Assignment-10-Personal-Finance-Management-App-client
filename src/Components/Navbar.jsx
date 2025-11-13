@@ -151,7 +151,7 @@ const Navbar = () => {
               </ul>
             </div>
           ) : (
-            <Link to="/login" className="btn bg-secondary text-base-100">
+            <Link to="/login" className="btn bg-secondary text-base-100  bg-linear-to-r from-[#db28eb] to-[#e84646]">
               Login
             </Link>
           )}
