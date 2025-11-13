@@ -46,7 +46,7 @@ const Register = () => {
             }
 
             // create user in the database 
-            fetch('http://localhost:3000/users',{
+            fetch('https://finease-server-psi.vercel.app/users',{
               method: 'POST',
               headers:{
                 'content-type': 'application/json'
@@ -86,7 +86,7 @@ const Register = () => {
             }
 
             // create user in the database 
-            fetch('http://localhost:3000/users',{
+            fetch('https://finease-server-psi.vercel.app/users',{
               method: 'POST',
               headers:{
                 'content-type': 'application/json'

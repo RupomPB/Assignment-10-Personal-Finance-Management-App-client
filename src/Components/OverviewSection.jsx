@@ -22,7 +22,7 @@ const OverviewSection = () => {
     const fetchData= async()=>{
       try{
         const res = await axios.get(
-          `http://localhost:3000/transactions?email=${user?.email}`
+          `https://finease-server-psi.vercel.app/transactions?email=${user?.email}`
         );
 
         const transactions = res.data;
@@ -64,22 +64,22 @@ const OverviewSection = () => {
 
     return (
         <div>
-             <section className="py-12 bg-gray-50">
+             <section className="py-12 ">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-80 dark:text-white">
           Financial Overview
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Total Balance Card */}
-          <div className="bg-gradient-to-r from-green-100 to-green-200 flex flex-col items-center p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className=" bg-linear-to-r from-green-100 to-green-200  flex flex-col items-center p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
             <FaWallet className="text-green-600 text-3xl mb-4" />
             <h3 className="text-2xl font-bold text-gray-800">${overview.totalBalance}</h3>
             <p className="text-gray-600 mt-2">Total Balance</p>
           </div>
 
           {/* Total Income Card */}
-          <div className="bg-gradient-to-r from-blue-100 to-blue-200 flex flex-col items-center p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className="bg-linear-to-r from-blue-100 to-blue-200 flex flex-col items-center p-6 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300">
             <FaArrowDown className="text-blue-600 text-3xl mb-4" />
             <h3 className="text-2xl font-bold text-gray-800">${overview.totalIncome}</h3>
             <p className="text-gray-600 mt-2">Total Income</p>

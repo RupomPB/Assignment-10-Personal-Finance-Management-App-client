@@ -12,7 +12,7 @@ const TransactionsDetails = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg my-20 ">
+    <section className="max-w-3xl mx-auto p-6 bg-white dark:bg-[#1d232a] border border-gray-500 shadow-lg rounded-lg my-20 ">
       <h2 className="text-2xl font-bold mb-6 text-center">
         Your Transaction Details
       </h2>
@@ -94,7 +94,7 @@ const TransactionsDetails = () => {
         </div>
 
         {/* Total Amount of Category */}
-        <div className="mt-10 p-4 bg-blue-50 rounded-lg">
+        <div className="mt-10 p-4 bg-blue-50 dark:bg-[#1d232a] border border-gray-300 rounded-lg">
           <span className="font-semibold">
             Total Amount in "{transaction.category}" category:{" "}
           </span>
@@ -102,16 +102,16 @@ const TransactionsDetails = () => {
         </div>
 
          {/*Created By Section */}
-      <div className="mt-8 bg-gray-50 border-t border-gray-200 p-6 rounded-2xl flex justify-between items-center">
+      <div className="mt-8 bg-gray-50 dark:bg-[#1d232a]  border border-gray-300 p-6 rounded-2xl flex justify-between items-center">
         <div>
-          <p className="text-sm text-gray-500">Created By</p>
-          <p className="font-semibold text-gray-800">
+          <p className="text-sm text-gray-500 dark:text-white">Created By</p>
+          <p className="font-semibold dark:text-white text-gray-800">
             {user?.displayName || "Unknown User"}
           </p>
         </div>
         <div>
-          <p className="text-sm text-gray-500">Email</p>
-          <p className="font-semibold text-gray-800">{user?.email || "-"}</p>
+          <p className="text-sm text-gray-500 dark:text-white">Email</p>
+          <p className="font-semibold text-gray-800 dark:text-white">{user?.email || "-"}</p>
         </div>
       </div>
       {/* button */}

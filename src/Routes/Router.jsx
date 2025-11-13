@@ -38,14 +38,14 @@ const router = createBrowserRouter([
         },
         {
             path:'/transaction/:id',
-            loader:({params})=>fetch(`http://localhost:3000/transactions/${params.id}`),
+            loader:({params})=>fetch(`https://finease-server-psi.vercel.app/transactions/${params.id}`),
             element: <PrivateRouter>
                 <TransactionsDetails></TransactionsDetails>
             </PrivateRouter>
         },
         {
             path:'/transaction/update/:id',
-            loader: ({params})=>fetch(`http://localhost:3000/transactions/${params.id}`),
+            loader: ({params})=>fetch(`https://finease-server-psi.vercel.app/transactions/${params.id}`),
             element: <PrivateRouter>
                 <UpdateTransaction></UpdateTransaction>
             </PrivateRouter>

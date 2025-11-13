@@ -21,7 +21,7 @@ const MonthlyChart = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/report-data?email=${user?.email}`)
+      .get(`https://finease-server-psi.vercel.app/report-data?email=${user?.email}`)
       .then((res) => {
         const data = res.data;
         const monthlyTotals = {};

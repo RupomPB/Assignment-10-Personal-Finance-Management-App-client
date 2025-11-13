@@ -68,7 +68,7 @@ const UpdateTransaction = () => {
 
 
   return (
-    <section className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+    <section className="max-w-3xl mx-auto p-8 bg-white dark:bg-[#1d232a] shadow-lg rounded-lg my-10  border border-gray-400">
       <h2 className="text-2xl font-bold mb-6 text-center">
         Update Transaction
       </h2>
@@ -82,7 +82,7 @@ const UpdateTransaction = () => {
             name="type"
             defaultValue={type}
             onChange={(e) => setType(e.target.value)}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border px-3 py-2 rounded dark:bg-[#1d232a]"
             required
           >
             <option value="income">Income</option>
@@ -98,7 +98,7 @@ const UpdateTransaction = () => {
             defaultValue={category}
             onChange={(e) => setCategory(e.target.value)}
             name="category"
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border px-3 py-2 rounded dark:bg-[#1d232a]"
           >
             {type === "income" &&
               incomeCategory.map((cat) => (
@@ -168,7 +168,7 @@ const UpdateTransaction = () => {
           <button
             onClick={() => navigate(-1)}
             type="button"
-            className="border border-gray-300 px-5 py-2 rounded-lg hover:bg-gray-50 transition-all"
+            className="border border-gray-300 px-5 py-2 btn rounded-lg  transition-all"
           >
             Cancel
           </button>

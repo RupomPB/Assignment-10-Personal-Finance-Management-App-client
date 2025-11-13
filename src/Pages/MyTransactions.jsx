@@ -50,7 +50,7 @@ const MyTransactions = () => {
   // get transaction data
   useEffect(() => {
     fetch(
-      `http://localhost:3000/transactions?email=${user.email}&sort=${sortBy}`
+      `https://finease-server-psi.vercel.app/transactions?email=${user.email}&sort=${sortBy}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -77,7 +77,7 @@ const MyTransactions = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 dark:bg-[#1d232a] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="date">Sort by Date</option>
             <option value="amount">Sort by Amount</option>
@@ -89,7 +89,7 @@ const MyTransactions = () => {
         {transactions.map((tx) => (
           <div
             key={tx._id}
-            className="bg-white p-6 rounded-xl shadow-md flex flex-col justify-between"
+            className="bg-white border border-gray-100 dark:bg-[#1d232a] p-6 rounded-xl shadow-md flex flex-col justify-between"
           >
             <div className="flex items-center gap-2 mb-2">
               <div
@@ -108,8 +108,8 @@ const MyTransactions = () => {
               <span
                 className={`${
                   tx.type === "income"
-                    ? "bg-blue-200 text-blue-500"
-                    : "bg-red-100 text-red-500 p-1 rounded-lg"
+                    ? "bg-blue-200 text-blue-700 rounded-lg px-2"
+                    : "bg-red-100 text-red-700 px-2 rounded-lg"
                 }`}
               >
                 {tx.type}
@@ -132,10 +132,10 @@ const MyTransactions = () => {
               {new Date(tx.date).toLocaleDateString()}
             </p>
 
-            <div className="mt-4 flex justify-between">
+            <div className="mt-4 flex justify-between ">
               <Link
                 to={`/transaction/${tx._id}`} 
-                className="px-3 py-1 rounded-lg flex items-center "
+                className="px-3 py-1 rounded-lg flex items-center border border-gray-300 "
               >
                 <CiViewList />
                 View Details
