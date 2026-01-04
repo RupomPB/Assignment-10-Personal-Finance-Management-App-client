@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaBehanceSquare } from 'react-icons/fa';
-import { FaFacebook, FaLinkedin } from 'react-icons/fa6';
+import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { Link } from 'react-router';
 
 const Footer = () => {
@@ -36,22 +36,22 @@ const Footer = () => {
           	{/* Social Icons */}
 					<div className="flex items-center gap-4 mt-4 text-lg">
 						<Link
-							to="https://www.facebook.com/"
+							to="https://www.facebook.com/rupomPB"
 							className="hover:text-blue-500"
 						>
 							<FaFacebook className="text-[24px]" />
 						</Link>
 						<Link
-							to="https://www.linkedin.com/login"
+							to="https://www.linkedin.com/in/rupom-pb/"
 							className="hover:text-blue-500"
 						>
 							<FaLinkedin className="text-[24px]" />
 						</Link>
 						<Link
-							to="https://www.behance.net/"
+							to="https://github.com/RupomPB/"
 							className="hover:text-blue-500"
 						>
-							<FaBehanceSquare className="text-[24px]" />
+							<FaGithub className="text-[24px]" />
 						</Link>
 					</div>
         </nav>

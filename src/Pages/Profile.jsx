@@ -10,7 +10,7 @@ const Profile = () => {
 
     return (
             <div className="min-h-screen flex flex-col justify-center items-center bg-base-300 ">
-        <div className="card bg-white dark:bg-[#1d232a] shadow-lg p-8 rounded-xl w-full max-w-md h-[450px] my-10">
+        <div className="card   shadow-lg p-8 rounded-xl w-full max-w-md h-[450px] my-10">
           <img
             src={user?.photoURL || userimg}
             className="w-28 h-28 mx-auto rounded-full mb-4 border"
@@ -22,7 +22,7 @@ const Profile = () => {
             {" "}
             User Email: {user?.email}
           </p>
-          <Link to="/profile/update" className='text-center'>
+          <Link to="/dashboard/profile/update" className='text-center'>
             <button className=" btn bg-linear-to-r from-[#db28eb] to-[#e84646]  mt-5 ">Update Information</button>
           </Link>
         </div>

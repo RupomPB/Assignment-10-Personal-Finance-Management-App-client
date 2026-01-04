@@ -19,7 +19,7 @@ const UpdateProfile = () => {
         })
         .then(()=>{
             toast.success('✅ Profile Updated Successfully');
-            navigate('/profile');
+            navigate('/dashboard/profile');
         })
         .catch((error)=>{
             toast.error(error.message);
@@ -28,10 +28,10 @@ const UpdateProfile = () => {
     }
 
     return (
-         <div className="min-h-screen flex justify-center items-center bg-base-200">
+         <div className="min-h-screen flex justify-center items-center ">
         <form
           onSubmit={handleUpdate}
-          className="bg-white p-8 rounded-xl shadow-md w-[400px]"
+          className=" p-8 rounded-xl shadow-md w-[400px]"
         >
           <h2 className="text-2xl font-bold mb-6 text-center">
             Update Profile

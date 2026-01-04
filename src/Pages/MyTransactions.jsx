@@ -15,7 +15,7 @@ const MyTransactions = () => {
   const axiosInstance = useAxios();
   const [sortBy, setSortBy] = useState("date");
 
-  // delete functions
+  // delete transaction
   const handleDelete = (_id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -27,140 +27,135 @@ const MyTransactions = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("delete");
-
-        axiosInstance.delete(`/transactions/${_id}`).then((data) => {
-          if (data.data.deletedCount) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your transaction has been deleted.",
-              icon: "success",
-            });
-
-
-            const remainingTransactions =transactions.filter(tx =>tx._id !== _id);
-            setTransactions(remainingTransactions)
-
+        axiosInstance.delete(`/transactions/${_id}`).then((res) => {
+          if (res.data.deletedCount) {
+            Swal.fire("Deleted!", "Transaction removed.", "success");
+            setTransactions((prev) =>
+              prev.filter((tx) => tx._id !== _id)
+            );
           }
         });
       }
     });
   };
 
-  // get transaction data
+  // fetch transactions
   useEffect(() => {
+    if (!user?.email) return;
+
     fetch(
       `https://finease-server-psi.vercel.app/transactions?email=${user.email}&sort=${sortBy}`
     )
       .then((res) => res.json())
-      .then((data) => {
-        setTransactions(data || []);
-      })
-      .catch((error) => {
-        toast.error("error fetching transaction", error);
-      });
+      .then((data) => setTransactions(data || []))
+      .catch(() => toast.error("Failed to load transactions"));
   }, [user, sortBy]);
 
   return (
-    <section className="max-w-7xl mx-auto py-12 px-4">
-      <h2 className="text-3xl font-bold mb-8 text-center">My Transactions</h2>
-      <p className="mb-8 text-center">View and manage all your transactions</p>
-
-      <div className="flex justify-between items-center">
-        <div className=" my-3 font-semibold">
-          Showing <span className=" font-extrabold">{transactions.length}</span>{" "}
-          transactions
+    <section className="max-w-7xl mx-auto px-4 py-8">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div>
+          <h2 className="text-3xl font-bold">My Transactions</h2>
+          <p className="text-gray-500 mt-1">
+            Showing{" "}
+            <span className="font-bold text-primary">
+              {transactions.length}
+            </span>{" "}
+            transactions
+          </p>
         </div>
 
-        {/* Sort Dropdown */}
-        <div className="flex justify-center mb-6">
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="border border-gray-300 dark:bg-[#1d232a] rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="date">Sort by Date</option>
-            <option value="amount">Sort by Amount</option>
-            <option value="none">none</option>
-          </select>
-        </div>
+        {/* Sort */}
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="w-full md:w-56 border rounded-lg px-4 py-2 dark:bg-[#1d232a]"
+        >
+          <option value="date">Sort by Date</option>
+          <option value="amount">Sort by Amount</option>
+          <option value="none">No Sorting</option>
+        </select>
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {transactions.map((tx) => (
-          <div
-            key={tx._id}
-            className="bg-white border border-gray-100 dark:bg-[#1d232a] p-6 rounded-xl shadow-md flex flex-col justify-between"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <div
-                className={`p-2 rounded-lg ${
-                  tx.type === "income"
-                    ? "bg-green-100 text-green-600"
-                    : "bg-red-100 text-red-500"
-                }`}
-              >
-                {tx.type === "income" ? (
-                  <TrendingUp />
-                ) : (
-                  <TrendingDown size={20} />
-                )}
-              </div>
-              <span
-                className={`${
-                  tx.type === "income"
-                    ? "bg-blue-200 text-blue-700 rounded-lg px-2"
-                    : "bg-red-100 text-red-700 px-2 rounded-lg"
-                }`}
-              >
-                {tx.type}
-              </span>
-            </div>
 
-            <p className=" font-bold">{tx.category}</p>
-
-            <p
-              className={`font-bold text-xl mt-2 ${
-                tx.type === "income" ? "text-green-500" : "text-red-500"
-              }`}
+      {/* Transactions */}
+      {transactions.length === 0 ? (
+        <p className="text-center text-gray-500 mt-20">
+          No transactions found.
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {transactions.map((tx) => (
+            <div
+              key={tx._id}
+              className="bg-white dark:bg-[#1d232a] rounded-xl shadow-md p-5 flex flex-col justify-between"
             >
-              {" "}
-              ${tx.amount}
-            </p>
+              {/* Type */}
+              <div className="flex items-center gap-3 mb-3">
+                <div
+                  className={`p-2 rounded-lg ${
+                    tx.type === "income"
+                      ? "bg-green-100 text-green-600"
+                      : "bg-red-100 text-red-600"
+                  }`}
+                >
+                  {tx.type === "income" ? <TrendingUp /> : <TrendingDown />}
+                </div>
+                <span
+                  className={`text-sm font-medium px-2 py-1 rounded-md ${
+                    tx.type === "income"
+                      ? "bg-green-200 text-green-700"
+                      : "bg-red-200 text-red-700"
+                  }`}
+                >
+                  {tx.type}
+                </span>
+              </div>
 
-            <p className=" font-semibold mt-2">
-              {" "}
-              {new Date(tx.date).toLocaleDateString()}
-            </p>
+              {/* Info */}
+              <div className="space-y-1">
+                <p className="font-semibold text-lg">{tx.category}</p>
+                <p
+                  className={`text-xl font-bold ${
+                    tx.type === "income"
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }`}
+                >
+                  ${tx.amount}
+                </p>
+                <p className="text-sm text-gray-500">
+                  {new Date(tx.date).toLocaleDateString()}
+                </p>
+              </div>
 
-            <div className="mt-4 flex justify-between ">
-              <Link
-                to={`/transaction/${tx._id}`} 
-                className="px-3 py-1 rounded-lg flex items-center border border-gray-300 "
-              >
-                <CiViewList />
-                View Details
-              </Link>
+              {/* Actions */}
+              <div className="mt-5 flex flex-wrap gap-2">
+                <Link
+                  to={`/transaction/${tx._id}`}
+                  className="flex-1 flex items-center justify-center gap-1 border rounded-lg py-2 text-sm hover:bg-base-200"
+                >
+                  <CiViewList /> View
+                </Link>
 
-              <Link
-               to={`/transaction/update/${tx._id}`}
-                className=" px-3 py-1 rounded-lg flex items-center text-yellow-600 bg-yellow-100"
-              >
-                <GrDocumentUpdate />
-                Update
-              </Link>
+                <Link
+                  to={`/transaction/update/${tx._id}`}
+                  className="flex-1 flex items-center justify-center gap-1 rounded-lg py-2 text-sm bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+                >
+                  <GrDocumentUpdate /> Edit
+                </Link>
 
-              <button
-                onClick={() => handleDelete(tx._id)}
-                className="px-3 py-1 rounded-lg flex items-center text-red-500 bg-red-100 "
-              >
-                <MdDeleteForever size={20} />
-                Delete
-              </button>
+                <button
+                  onClick={() => handleDelete(tx._id)}
+                  className="flex-1 flex items-center justify-center gap-1 rounded-lg py-2 text-sm bg-red-100 text-red-600 hover:bg-red-200"
+                >
+                  <MdDeleteForever size={18} /> Delete
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 };

@@ -1,157 +1,131 @@
 import React, { use, useEffect, useState } from "react";
-import { Link, Navigate, NavLink } from "react-router";
+
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 import userimg from "../assets/user.png";
 
 
+import { Link, Navigate, NavLink } from "react-router";
+
+
+
+
 const Navbar = () => {
   const { user, logoutUser } = use(AuthContext);
-  // const navigate = useNavigate();
-  const [theme, setTheme]= useState(localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
-
-  useEffect(()=>{
-    const html = document.querySelector('html')
-    html.setAttribute('data-theme', theme)
-    localStorage.setItem('theme', theme)
-  },[theme])
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   const handleTheme = (checked) => {
-    console.log(checked);
-    setTheme(checked? 'dark': 'light')
-
+    setTheme(checked ? "dark" : "light");
   };
 
   const handleLogout = () => {
     logoutUser()
-      .then(() => {
-        toast.success("sign-out successfully");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+      .then(() => toast.success("Logged out successfully"))
+      .catch((err) => toast.error(err.message));
   };
 
   const links = (
     <>
-      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/">
-        <li>Home </li>
-      </NavLink>
-      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/add-transaction">
-        <li>Add Transaction</li>
-      </NavLink>
-      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/my-transactions">
-        <li>My Transactions</li>
-      </NavLink>
-      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/my-reports">
-        <li>Reports</li>
-      </NavLink>
-      <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/profile">
-        <li>My Profile</li>
+      <NavLink to="/" className={({ isActive }) =>
+        `ml-5 ${isActive ? "text-primary font-bold border-b-2" : "text-base-content"}`
+      }>
+        <li>Home</li>
       </NavLink>
 
-      {/* conditional if user unavailable */}
-      {!user && (
+      <NavLink to="/about" className={({ isActive }) =>
+        `ml-5 ${isActive ? "text-primary font-bold border-b-2" : "text-base-content"}`
+      }>
+        <li>About</li>
+      </NavLink>
+
+      <NavLink to="/contact" className={({ isActive }) =>
+        `ml-5 ${isActive ? "text-primary font-bold border-b-2" : "text-base-content"}`
+      }>
+        <li>Contact</li>
+      </NavLink>
+
+      {user && (
         <>
-          <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/login">
-            <li>Login </li>
-          </NavLink>
-          <NavLink className={({isActive})=>`ml-5 ${isActive? "text-pink-500 font-bold border-b-2 dark:text-pink-400": "text-gray-700 dark:text-gray-300"} `} to="/register">
-            <li>Register </li>
-          </NavLink>
+          
+        <NavLink to="/dashboard" className={({ isActive }) =>
+          `ml-5 ${isActive ? "text-primary font-bold border-b-2" : "text-base-content"}`
+        }>
+          <li>Dashboard</li>
+        </NavLink>
+
+        <NavLink to="/blog" className={({ isActive }) =>
+        `ml-5 ${isActive ? "text-primary font-bold border-b-2" : "text-base-content"}`
+      }>
+        <li>Blog</li>
+      </NavLink>
         </>
       )}
     </>
   );
 
   return (
-    <section className="w-full bg-base-100 shadow-sm py-3  ">
-      <div className="container mx-auto flex justify-between items-center px-4">
-        <div className="navbar-start ">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
-            </div>
-            <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
+    <section className="w-full bg-base-100 shadow-sm">
+      <div className="container mx-auto navbar px-4">
+        {/* Left */}
+        <div className="navbar-start">
+          <div className="dropdown lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost">
+              ☰
+            </label>
+            <ul tabIndex={0} className="menu dropdown-content bg-base-100 p-2 shadow rounded-box w-52">
               {links}
             </ul>
           </div>
-          <div>
-            <p className=" font-bold text-xl">
-              Fin{" "}
-              <span className="bg-linear-to-r from-[#db28eb] to-[#e84646] text-transparent bg-clip-text">
-                Ease
-              </span>
-            </p>
-          </div>
-          {/* {user && user.email} */}
-        </div>
-        <div className="navbar-center hidden lg:flex ">
-          <ul className="menu menu-horizontal px-2">{links}</ul>
+
+          <Link to="/" className="text-xl font-bold">
+            Fin<span className="text-primary">Ease</span>
+          </Link>
         </div>
 
-        {/* dropdown */}
+        {/* Center */}
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal">{links}</ul>
+        </div>
 
-      
-
-        <div className="navbar-end">
+        {/* Right */}
+        <div className="navbar-end gap-3">
           <input
-          onChange={(e) => handleTheme(e.target.checked)}
-          type="checkbox"
-          defaultChecked={localStorage.getItem("theme") === "dark"}
-          className="toggle mr-5"
-        />
+            type="checkbox"
+            className="toggle"
+            onChange={(e) => handleTheme(e.target.checked)}
+            defaultChecked={theme === "dark"}
+          />
+
           {user ? (
             <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button">
+              <label tabIndex={0}>
                 <img
-                  className="mr-3 w-11 h-11 rounded-full cursor-pointer"
-                  src={user.photoURL ? user.photoURL : userimg}
+                  src={user.photoURL || userimg}
+                  className="w-10 h-10 rounded-full cursor-pointer"
                 />
-              </div>
-
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-10 menu p-4 shadow bg-base-100 rounded-box w-fit"
-              >
-                <li className="flex flex-col items-start  border-b">
-                  <span className="font-semibold w-full">
+              </label>
+              <ul className="dropdown-content menu p-3 shadow bg-base-100 rounded-box w-48">
+                <li className="border-b pb-2">
+                  <span className="font-semibold">
                     {user.displayName || "User"}
                   </span>
-
-                  <span className="text-sm opacity-70">{user.email}</span>
+                  <span className="text-xs opacity-70">{user.email}</span>
                 </li>
-
                 <li className="mt-2">
-                  <button
-                    onClick={handleLogout}
-                    className="btn btn-outline btn-sm bg-linear-to-r from-[#db28eb] to-[#e84646]  text-white"
-                  >
+                  <button onClick={handleLogout} className="btn btn-sm btn-outline">
                     Logout
                   </button>
                 </li>
               </ul>
             </div>
           ) : (
-            <Link to="/login" className="btn bg-secondary text-base-100  bg-linear-to-r from-[#db28eb] to-[#e84646]">
+            <Link to="/login" className="btn btn-primary btn-sm">
               Login
             </Link>
           )}
