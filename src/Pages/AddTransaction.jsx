@@ -87,7 +87,7 @@ const AddTransaction = () => {
       {
     role !== 'admin' && (
       <p className="text-red-500 text-center mb-4">
-        Viewer mode: You cannot add transactions
+        Viewer mode: You cannot add transactions, Please go to Admin Mode for transactions.
       </p>
     )
   }
