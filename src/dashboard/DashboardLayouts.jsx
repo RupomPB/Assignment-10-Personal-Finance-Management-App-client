@@ -1,11 +1,15 @@
 import { Link, NavLink, Outlet } from "react-router";
-import DashboardOverView from './DashboardOverview/DashboardOverview';
+import DashboardOverView from "./DashboardOverview/DashboardOverview";
+import { useContext } from "react";
+import { AppContext } from "../Context/AppContext";
 
 const DashboardLayouts = () => {
   const navItem =
     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all";
   const activeNav = "bg-primary text-white shadow-md";
   const inactiveNav = "text-base-content hover:bg-base-300";
+
+    const { role, handleRoleChange } = useContext(AppContext)
 
   return (
     <div className="drawer lg:drawer-open max-w-7xl mx-auto min-h-screen">
@@ -121,8 +125,6 @@ const DashboardLayouts = () => {
                 >
                   📄 My Transactions
                 </NavLink>
-
-                
               </div>
             </li>
 
@@ -138,6 +140,21 @@ const DashboardLayouts = () => {
             </li>
 
             <li>
+              <div>
+                {/* Role Switch */}
+                <select
+                  value={role}
+                  onChange={(e)=>{
+                    handleRoleChange(e.target.value);
+
+                  }}
+                  className="select select-bordered select-sm"
+                >
+                  <option value="viewer">Viewer</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+
               <NavLink
                 to="/dashboard/profile"
                 className={({ isActive }) =>

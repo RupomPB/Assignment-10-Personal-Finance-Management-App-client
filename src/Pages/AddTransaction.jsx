@@ -1,14 +1,17 @@
-import React, { use, useState } from "react";
+import React, { use, useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import useAxios from "../hooks/useAxios";
 import { useNavigate } from "react-router";
 import MyTransactions from './MyTransactions';
 import { toast } from "react-toastify";
+import { AppContext } from "../Context/AppContext";
 
 const AddTransaction = () => {
   const { user } = use(AuthContext);
   const axiosInstance = useAxios();
   const navigate = useNavigate();
+
+  const {role} = useContext(AppContext)
 
   const [formData, setFormData] = useState({
     type: "income",
@@ -64,6 +67,8 @@ const AddTransaction = () => {
 
   };
 
+
+
   return (
     <section className="max-w-3xl mx-auto py-12 px-4 ">
       <h2 className="text-3xl font-bold mb-8 text-center">
@@ -73,8 +78,20 @@ const AddTransaction = () => {
 
       <form
         onSubmit={handleSubmit}
+        
+
         className="bg-base-100 p-8 rounded-xl shadow-lg border-2 border-gray-200 space-y-6"
       >
+      <fieldset disabled={role !== 'admin'} >
+
+      {
+    role !== 'admin' && (
+      <p className="text-red-500 text-center mb-4">
+        Viewer mode: You cannot add transactions
+      </p>
+    )
+  }
+
         <div>
           <label className="block mb-1 font-semibold">Transaction Type <span className="text-red-500">*</span></label>
           <select
@@ -157,16 +174,22 @@ const AddTransaction = () => {
             type="text"
             value={user.displayName}
             readOnly
-            className="w-full border border-gray-300 rounded p-2 dark:bg-[#1d232a] bg-gray-100"
+            className="w-full border border-gray-300 rounded p-2 dark:bg-[#1d232a] mb-3 "
           />
         </div>
 
         <button
           type="submit"
-          className="w-full py-7 btn bg-linear-to-r from-[#db28eb] to-[#e84646] text-white  rounded-lg hover:bg-indigo-700 transition-colors"
+          disabled={role !== 'admin'}
+          className={`w-full py-7 btn  text-white  rounded-lg ${
+          role == 'admin' 
+          ? "bg-linear-to-r from-[#db28eb] to-[#e84646]"
+          : "bg-gray-400 cursor-not-allowed"
+          } hover:bg-indigo-700  transition-colors`}
         >
           Add Transaction
         </button>
+      </fieldset>
       </form>
     </section>
   );
