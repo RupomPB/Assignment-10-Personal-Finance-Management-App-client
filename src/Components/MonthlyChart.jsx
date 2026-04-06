@@ -1,93 +1,127 @@
 import axios from "axios";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
-import {
 
-  Bar,
-  BarChart,
+import {
+  LineChart,
+  Line,
   CartesianGrid,
-  Legend,
-  Rectangle,
-  ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
 } from "recharts";
 
 const MonthlyChart = () => {
-  const { user } = use(AuthContext);
+  const { user } = useContext(AuthContext);
   const [chartData, setChartData] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth()); // 0 = Jan
 
   useEffect(() => {
+    if (!user?.email) return;
+
     axios
-      .get(`https://finease-server-psi.vercel.app/report-data?email=${user?.email}`)
+      .get(`https://finease-server-psi.vercel.app/report-data?email=${user.email}`)
       .then((res) => {
         const data = res.data;
-        const monthlyTotals = {};
+        const currentYear = new Date().getFullYear();
+
+        const dailyTotals = {};
+        const daysInMonth = new Date(currentYear, selectedMonth + 1, 0).getDate();
+
+        // Initialize each day
+        for (let i = 1; i <= daysInMonth; i++) {
+          dailyTotals[i] = { day: i, income: 0, expense: 0 };
+        }
+
+        // Aggregate income/expense by day
         data.forEach((item) => {
           const date = new Date(item.date);
-          const month = date.toLocaleDateString("en-US", { month: "short" });
+          if (
+            date.getMonth() !== selectedMonth ||
+            date.getFullYear() !== currentYear
+          )
+            return;
 
-          const amount = Number(item.amount);
+          const day = date.getDate();
+          const amount = Number(item.amount) || 0;
+          const type = item.type?.toLowerCase();
 
-          if (!monthlyTotals[month]) {
-            monthlyTotals[month] = { month, income: 0, expense: 0 };
-          }
-          if (item.type.toLowerCase() === "income") {
-            monthlyTotals[month].income += amount;
-          }
-          if (item.type.toLowerCase()  === "expense") {
-            monthlyTotals[month].expense += amount;
-          }
+          if (type === "income") dailyTotals[day].income += amount;
+          if (type === "expense") dailyTotals[day].expense += amount;
         });
 
-        const months = [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-          "Oct",
-          "Nov",
-          "Dec",
-        ];
-
-        const formatting = Object.values(monthlyTotals).sort(
-          (a, b) => months.indexOf(a.month) - months.indexOf(b.month)
-        );
-        setChartData(formatting);
+        // Convert to array for chart
+        setChartData(Object.values(dailyTotals));
       })
-      .catch((error) => {
-        toast.error(error.message);
-      });
-  }, [user]);
+      .catch((error) => toast.error(error.message));
+  }, [user?.email, selectedMonth]);
+
+  const monthNames = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
 
   return (
-    <div className="w-full min-h-[400px] rounded-2xl">
-      <h2 className="text-2xl font-semibold text-center py-5">
-        Here is your <span>Monthly Income vs Expense</span>
+    <div className="w-full bg-base-100 shadow-xl rounded-2xl p-6">
+      <h2 className="text-2xl font-bold text-center mb-4">
+        📈 Daily Financial Trend
       </h2>
 
-      <ResponsiveContainer width="100%" aspect={2}>
-        <BarChart
-          data={chartData}
-          
-          margin={{ top: 20, right: 30, left: 10, bottom: 5 }}
+      {/* Month Selector */}
+      <div className="flex justify-center mb-6">
+        <select
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(Number(e.target.value))}
+          className="border rounded p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Legend/>
+          {monthNames.map((name, idx) => (
+            <option key={idx} value={idx}>
+              {name}
+            </option>
+          ))}
+        </select>
+      </div>
 
-          <Bar dataKey="income" fill="#44f295" />
-          <Bar dataKey="expense" fill="#eb3b49" />
-        </BarChart>
+      <ResponsiveContainer width="100%" height={350}>
+        <LineChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.2} />
+
+          <XAxis dataKey="day" label={{ value: "Day", position: "insideBottomRight", offset: -5 }} />
+          <YAxis label={{ value: "Amount ($)", angle: -90, position: "insideLeft" }} />
+
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#1d232a",
+              borderRadius: "10px",
+              border: "none",
+              color: "#fff",
+            }}
+            formatter={(value) => `$${value}`}
+          />
+
+          <Legend />
+
+          <Line
+            type="monotone"
+            dataKey="income"
+            stroke="#22c55e"
+            strokeWidth={3}
+            dot={{ r: 4 }}
+            activeDot={{ r: 7 }}
+          />
+
+          <Line
+            type="monotone"
+            dataKey="expense"
+            stroke="#ef4444"
+            strokeWidth={3}
+            dot={{ r: 4 }}
+            activeDot={{ r: 7 }}
+          />
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );

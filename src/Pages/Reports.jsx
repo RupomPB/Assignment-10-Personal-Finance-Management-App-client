@@ -1,26 +1,23 @@
-import React from 'react';
-import MonthlyChart from '../Components/MonthlyChart';
-import CategoryChart from '../Components/CategoryChart';
+import React from "react";
+import MonthlyChart from "../Components/MonthlyChart";
+import CategoryChart from "../Components/CategoryChart";
 
 const Reports = () => {
-    return (
-       <section className='py-20 px-10 my-5'>
-        <div className='grid grid-cols-1 lg:grid-cols-2 items-center'>
-        
-         <div>
-        <CategoryChart></CategoryChart>
+  return (
+    <section className="py-20 px-10 my-5">
+      <div className=" items-center">
+        {/* Main Chart */}
+        <div className="mb-12">
+          <MonthlyChart />
         </div>
-        
-        <div>
-            <MonthlyChart></MonthlyChart>
-        </div>
-        
 
+        {/* Optional Secondary */}
+        <div>
+          <CategoryChart />
         </div>
-            
-       
-       </section>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default Reports;

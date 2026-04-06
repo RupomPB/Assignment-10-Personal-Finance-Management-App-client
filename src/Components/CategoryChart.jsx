@@ -38,7 +38,7 @@ const CategoryChart = () => {
         const categoryTotals = {};
         data.forEach((item) => {
           const amount = Number(item.amount);
-          const type = item.type.toLowerCase();
+          const type = item.type?.toLowerCase();
           const key = `${type}-${item.category}`;
 
           if (!categoryTotals[key]) {
@@ -56,7 +56,7 @@ const CategoryChart = () => {
       .catch((error) => {
         toast.error(error.message);
       });
-  }, [user]);
+  }, [user?.email]);
 
   return (
     <div className="w-full min-h-[400px] rounded-2xl  p-4 py-10 my-10">
