@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { toast } from "react-toastify";
 import { TrendingDown, TrendingUp } from "lucide-react";
@@ -8,15 +8,21 @@ import { CiViewList } from "react-icons/ci";
 import Swal from "sweetalert2";
 import useAxios from "../hooks/useAxios";
 import { Link } from "react-router";
+import { AppContext } from "../Context/AppContext";
 
 const MyTransactions = () => {
   const { user } = use(AuthContext);
   const [transactions, setTransactions] = useState([]);
   const axiosInstance = useAxios();
   const [sortBy, setSortBy] = useState("date");
+  const { role } = useContext(AppContext);
 
   // delete transaction
   const handleDelete = (_id) => {
+    if (role !== "admin") {
+      return toast.error("Only Admin can delete it");
+    }
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -30,9 +36,7 @@ const MyTransactions = () => {
         axiosInstance.delete(`/transactions/${_id}`).then((res) => {
           if (res.data.deletedCount) {
             Swal.fire("Deleted!", "Transaction removed.", "success");
-            setTransactions((prev) =>
-              prev.filter((tx) => tx._id !== _id)
-            );
+            setTransactions((prev) => prev.filter((tx) => tx._id !== _id));
           }
         });
       }
@@ -44,7 +48,7 @@ const MyTransactions = () => {
     if (!user?.email) return;
 
     fetch(
-      `https://finease-server-psi.vercel.app/transactions?email=${user.email}&sort=${sortBy}`
+      `https://finease-server-psi.vercel.app/transactions?email=${user.email}&sort=${sortBy}`,
     )
       .then((res) => res.json())
       .then((data) => setTransactions(data || []))
@@ -117,9 +121,7 @@ const MyTransactions = () => {
                 <p className="font-semibold text-lg">{tx.category}</p>
                 <p
                   className={`text-xl font-bold ${
-                    tx.type === "income"
-                      ? "text-green-500"
-                      : "text-red-500"
+                    tx.type === "income" ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   ${tx.amount}
@@ -137,17 +139,30 @@ const MyTransactions = () => {
                 >
                   <CiViewList /> View
                 </Link>
-
+                {/* edit button */}
                 <Link
-                  to={`/transaction/update/${tx._id}`}
-                  className="flex-1 flex items-center justify-center gap-1 rounded-lg py-2 text-sm bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+                  to={ role === 'admin' ? `/transaction/update/${tx._id}` : "#"}
+                  onClick={(e)=>{
+                    if(role !== "admin"){
+                      e.preventDefault();
+                      toast.error('Viewer cannot edit')
+                    }
+                  }}
+                  className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2 text-sm 
+                  ${role === 'admin' 
+                  ? "bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"} `}
                 >
                   <GrDocumentUpdate /> Edit
                 </Link>
-
                 <button
                   onClick={() => handleDelete(tx._id)}
-                  className="flex-1 flex items-center justify-center gap-1 rounded-lg py-2 text-sm bg-red-100 text-red-600 hover:bg-red-200"
+                  disabled={role !=="admin"}
+
+                  className={`flex-1 flex items-center justify-center gap-1 rounded-lg py-2 text-sm 
+                  ${role ==="admin"
+                  ? "bg-red-100 text-red-600 hover:bg-red-200"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
                 >
                   <MdDeleteForever size={18} /> Delete
                 </button>
