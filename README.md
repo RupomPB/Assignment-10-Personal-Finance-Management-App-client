@@ -1,34 +1,36 @@
 # 🏦 FinEase App – Personal Finance Management Platform
 
 ## 🔗 Live Links
-
-🌍 Live Website: https://finease-project.netlify.app/  
-💻 Client Repository: https://github.com/RupomPB/Assignment-10-Personal-Finance-Management-App-client  
-🖥 Server Repository: https://github.com/RupomPB/Assignment-10-Personal-Finance-Management-App-server  
+🌍 Live Website: [https://finease-project.netlify.app/](https://finease-project.netlify.app/)  
+💻 Client Repository: [GitHub Client](https://github.com/RupomPB/Assignment-10-Personal-Finance-Management-App-client)  
+🖥 Server Repository: [GitHub Server](https://github.com/RupomPB/Assignment-10-Personal-Finance-Management-App-server)  
 
 ---
 
-
 ## 📌 Project Overview
 
-FinEase demonstrates a production-ready **MERN stack implementation** with Firebase Authentication and real-time data visualization. Users can:
+**FinEase** is a modern **MERN stack personal finance management app** integrated with Firebase Authentication.  
+It allows users to:
 
 - Track income and expenses securely  
-- Perform CRUD operations on financial transactions  
-- View interactive dashboards and charts for financial insights  
-- Access a responsive, user-friendly interface across devices  
+- Perform **CRUD operations** on financial transactions  
+- Access **role-based UI** (Admin / Viewer)  
+- View **interactive charts and dashboards** with real-time insights  
+- Filter and sort transactions by date, amount, category, and type  
+- Focus on **one-month transaction view** for detailed analytics  
 
 ---
 
 ## 🏗 Application Architecture
 
-**Client (React)**  
-↓ REST API  
-**Server (Node + Express)**  
-↓  
-**MongoDB Atlas**  
-↓  
-**Firebase Authentication**
+Client (React + Tailwind CSS)
+↓ REST API
+Server (Node.js + Express.js)
+↓
+MongoDB Atlas
+↓
+Firebase Authentication
+
 
 ---
 
@@ -44,20 +46,27 @@ FinEase demonstrates a production-ready **MERN stack implementation** with Fireb
 
 ### 🔐 Authentication & Authorization
 - Secure login and registration with **Firebase Authentication**  
-- Role-based access and protected routes  
+- **Role-Based UI**:
+  - **Admin:** Full access (add/edit/delete transactions)  
+  - **Viewer:** Limited access (cannot add/edit/delete)  
+- Protected routes for security  
 
 ### 💰 Financial Management
-- Full **CRUD operations** for income and expense tracking  
-- Data persisted in MongoDB with **RESTful APIs**  
+- Add, edit, delete, and view transactions  
+- Transactions stored in MongoDB via **RESTful APIs**  
+- **Filtering** by month, category, type  
+- **Sorting** by amount or date  
+- **One-month chart view** for daily transaction tracking  
 
 ### 📊 Interactive Dashboards
-- Dynamic charts using **Recharts** for real-time financial insights  
-- Visual reports for income, expenses, and budgets  
+- **Recharts** for visualizing income, expenses, and balance trends  
+- Trend indicators with `TrendingUp` / `TrendingDown` icons  
+- Real-time updates on dashboards as transactions change  
 
 ### 🎨 Responsive UI/UX
-- Modern, clean interface with **React & Tailwind CSS**  
-- User-friendly alerts and confirmations using **SweetAlert2**  
-- Fully responsive for mobile and desktop devices  
+- Modern interface with **React & Tailwind CSS**  
+- User-friendly confirmations and alerts via **SweetAlert2**  
+- Fully responsive across mobile and desktop devices  
 
 ---
 
@@ -65,83 +74,62 @@ FinEase demonstrates a production-ready **MERN stack implementation** with Fireb
 
 1. User registers or logs in securely  
 2. Firebase handles authentication and protected access  
-3. Users add, edit, or delete financial transactions  
-4. Data stored in MongoDB via RESTful APIs  
-5. Dashboards and charts dynamically reflect changes  
-6. Users track finances in real-time with actionable insights  
+3. Role-based UI adjusts functionality (Admin/Viewer)  
+4. Users add, edit, or delete transactions (if permitted)  
+5. Transactions stored in MongoDB via RESTful APIs  
+6. Dashboards and charts dynamically reflect changes  
+7. Insights highlight income, expenses, balance trends  
 
 ---
 
 ## 📂 Project Structure
 
 **Client**
-```
+
 src/
- ├── components/
- ├── pages/
- ├── dashboard/
- ├── routes/
- ├── context/
- └── utils/
-```
+├── components/
+├── pages/
+├── dashboard/
+├── routes/
+├── context/ # Role-based state management & global state
+└── utils/
 
 **Server**
-```
+
 server/
- ├── routes/
- ├── controllers/
- ├── middleware/
- ├── models/
- └── config/
-```
+├── routes/
+├── controllers/
+├── middleware/
+├── models/
+└── config/
 
----
-
-## 🔐 Environment Variables
-
-**Client (.env)**
-```
-VITE_API_URL=
-```
-
-**Server (.env)**
-```
-PORT=
-MONGODB_URI=
-FIREBASE_API_KEY=
-FIREBASE_AUTH_DOMAIN=
-FIREBASE_PROJECT_ID=
-FIREBASE_STORAGE_BUCKET=
-FIREBASE_MESSAGING_SENDER_ID=
-FIREBASE_APP_ID=
-```
 
 ---
 
 ## ⚡ Performance & Optimization
 
-- Modular and scalable backend architecture  
+- Modular, scalable backend architecture  
 - Optimized MongoDB queries for efficiency  
-- Reusable frontend components for maintainability  
-- Lazy-loading for routes and charts to improve performance  
-- Production-ready deployment setup  
+- Reusable frontend components  
+- Lazy-loading for routes and charts  
+- Production-ready deployment  
 
 ---
 
 ## 🧠 Learning Outcomes
 
-- Full-stack MERN application development  
-- Secure user authentication & authorization  
-- CRUD operations and REST API design  
-- Interactive data visualization with charts  
-- Responsive and modern UI/UX  
-- Deployment workflow and environment configuration  
+- Full-stack MERN development  
+- Role-Based UI and access control  
+- CRUD operations with REST APIs  
+- Interactive charts for **one-month financial insights**  
+- Filtering & sorting data effectively  
+- Responsive design & real-time dashboards  
 
 ---
 
 ## 📈 Future Improvements
 
-- Multi-user dashboard with Admin / User roles  
+- Multi-user dashboard with advanced roles  
 - Recurring transactions and budget alerts  
 - Export reports (PDF/CSV)  
 - Email notifications and reminders  
@@ -151,13 +139,11 @@ FIREBASE_APP_ID=
 
 ## 👨‍💻 Developer
 
-Rupom PB  
-MERN Stack Developer  
-
-Focused on building **scalable, secure, and production-ready full-stack applications**.
+**Rupom PB** – MERN Stack Developer  
+Focused on building **secure, scalable, and production-ready applications**  
 
 ---
 
 ## ⭐ Support
 
-If you like this project, give it a ⭐ on GitHub.
+If you like this project, give it a ⭐ on GitHub.  

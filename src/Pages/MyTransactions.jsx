@@ -156,6 +156,7 @@ const MyTransactions = () => {
                   <GrDocumentUpdate /> Edit
                 </Link>
                 <button
+                
                   onClick={() => handleDelete(tx._id)}
                   disabled={role !=="admin"}
 
