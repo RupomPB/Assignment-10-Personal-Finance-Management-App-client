@@ -90,6 +90,12 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        
+        index: true,
+        element: <DashboardOverView />,
+      
+      },
+      {
         path: "profile",
         element: <Profile></Profile>,
       },
@@ -126,6 +132,7 @@ const router = createBrowserRouter([
         ),
       },
       {
+       
         path: 'dashboardOverview',
         element: <DashboardOverView></DashboardOverView>
       }
